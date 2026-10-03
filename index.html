@@ -581,17 +581,16 @@ footer {
                     在家人親友的陪伴與思念中，<br>
                     <span class="u-block">安詳辭世，圓滿人生旅程。</span>
                     <br><br>
-                    靈位安奉於自宅，<br>
+                    安靈於 ［ 自宅 ］<br>
                     謹擇於<br>
                     <span class="u-block" style="color:var(--ink);font-weight:600;">
                         民國115年10月29日（星期四）
                     </span>
                     <br>
-                    於自宅舉辦告別追思奠禮<br>
-                    並於儀式圓滿後出殯
+                    於 ［ 自宅 ］舉辦告別追思奠禮<br>
                     <br><br>
                     <span style="color:var(--ink);font-weight:600;">
-                        新北市新莊區西盛里新樹路268巷24弄3號
+                        地址：新北市新莊區西盛里新樹路268巷24弄3號
                     </span>
                 </p>
             </div>
@@ -742,7 +741,7 @@ footer {
                 <button class="drawer-btn" type="button"
                         onclick="toggleDrawer(this,'map_ref')"
                         aria-expanded="false" aria-controls="map_ref">
-                    自宅交通資訊
+                    交通資訊
                     <span class="toggle-icon" aria-hidden="true">+</span>
                 </button>
 
@@ -842,8 +841,6 @@ const toast = document.getElementById('toast');
 const FULL_INFO =
 `【追思告別】${MEMORIAL.name}
 
-🕯️ 往生日期：${MEMORIAL.deathDate}
-🏠 安靈地點：自宅
 🕰️ 告別日期：${MEMORIAL.ceremonyDate}
 🕰️ 家奠禮：上午${MEMORIAL.familyTime}
 🕰️ 公奠禮：上午${MEMORIAL.publicTime}
@@ -1027,11 +1024,11 @@ function shareLine() {
 
 /* Google 行事曆 */
 function addCal() {
-    const title = `${MEMORIAL.name}自宅告別追思奠禮`;
+    const title = `${MEMORIAL.name}黃千鐘先生告別追思奠禮`;
     const dates = `${MEMORIAL.dateCompact}T090000/${MEMORIAL.dateCompact}T110000`;
 
     const details =
-        `${MEMORIAL.name}自宅告別追思奠禮\n` +
+        `${MEMORIAL.name}黃千鐘先生告別追思奠禮\n` +
         `往生日期：${MEMORIAL.deathDate}\n` +
         `告別日期：${MEMORIAL.ceremonyDate}\n` +
         `家奠禮：上午${MEMORIAL.familyTime}\n` +
