@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -856,7 +855,7 @@ const FULL_INFO =
 
 🔗 雲端訃告詳情：${window.location.href}`;
 
-/* 背景音樂 */
+/* 背景音樂控制 */
 const ICON_PLAY =
     'https://img.icons8.com/material-outlined/24/777777/musical-notes.png';
 const ICON_PAUSE =
@@ -865,11 +864,14 @@ const ICON_PAUSE =
 function updateBgmIcon(playing) {
     const icon = document.getElementById('bgmIcon');
     const btn = document.getElementById('bgmBtn');
-    icon.src = playing ? ICON_PLAY : ICON_PAUSE;
-    btn.setAttribute('aria-label', playing ? '暫停背景音樂' : '播放背景音樂');
+    if (icon && btn) {
+        icon.src = playing ? ICON_PLAY : ICON_PAUSE;
+        btn.setAttribute('aria-label', playing ? '暫停背景音樂' : '播放背景音樂');
+    }
 }
 
 async function toggleBGM() {
+    if (!bgm) return;
     if (bgm.paused) {
         bgm.volume = 0.4;
         try {
@@ -884,11 +886,11 @@ async function toggleBGM() {
     }
 }
 
-bgm.addEventListener('play', () => updateBgmIcon(true));
-bgm.addEventListener('pause', () => updateBgmIcon(false));
-bgm.addEventListener('error', () => {
-    updateBgmIcon(false);
-});
+if (bgm) {
+    bgm.addEventListener('play', () => updateBgmIcon(true));
+    bgm.addEventListener('pause', () => updateBgmIcon(false));
+    bgm.addEventListener('error', () => updateBgmIcon(false));
+}
 
 /* 區塊進場動畫 */
 let writingStarted = false;
@@ -948,38 +950,43 @@ function toggleDrawer(btn, id) {
     const isOpen = content.classList.contains('open');
     content.classList.toggle('open', !isOpen);
     btn.classList.toggle('open', !isOpen);
-    btn.querySelector('.toggle-icon').textContent = isOpen ? '+' : '−';
+    const icon = btn.querySelector('.toggle-icon');
+    if (icon) icon.textContent = isOpen ? '+' : '−';
     btn.setAttribute('aria-expanded', String(!isOpen));
 }
 
-/* 圖片放大 */
+/* 圖片放大 (Lightbox) */
 function openLightbox(src) {
-    if (!src) return;
+    if (!src || !lb || !lbi) return;
     lbi.src = src;
     lb.classList.add('active');
     document.body.style.overflow = 'hidden';
-    document.querySelector('.lb-close').focus();
+    const closeBtn = lb.querySelector('.lb-close');
+    if (closeBtn) closeBtn.focus();
 }
 
 function closeLightbox() {
-    if (!lb.classList.contains('active')) return;
+    if (!lb || !lb.classList.contains('active')) return;
     lb.classList.remove('active');
     document.body.style.overflow = '';
-    lbi.removeAttribute('src');
+    if (lbi) lbi.removeAttribute('src');
 }
 
-lb.addEventListener('click', event => {
-    if (event.target === lb) closeLightbox();
-});
+if (lb) {
+    lb.addEventListener('click', event => {
+        if (event.target === lb) closeLightbox();
+    });
+}
 
 document.addEventListener('keydown', event => {
     if (event.key === 'Escape') closeLightbox();
 });
 
-/* 提示訊息 */
+/* 提示訊息 (Toast) */
 let toastTimer = null;
 
 function showToast(message) {
+    if (!toast) return;
     window.clearTimeout(toastTimer);
     toast.textContent = message;
     toast.classList.add('show');
@@ -1018,8 +1025,7 @@ function shareLine() {
     window.open(shareUrl, '_blank', 'noopener,noreferrer');
 }
 
-/* Google 行事曆
-   暫定09:00至11:00，實際結束時間請依家屬安排調整 */
+/* Google 行事曆 */
 function addCal() {
     const title = `${MEMORIAL.name}自宅告別追思奠禮`;
     const dates = `${MEMORIAL.dateCompact}T090000/${MEMORIAL.dateCompact}T110000`;
